@@ -11,8 +11,10 @@ public class ScraperMain {
 
         try {
 
+            DataModel myCar = new DataModel(2001, "nissan", "rogue");
+
             Document doc;
-            doc = Jsoup.connect("https://www.kijiji.ca/b-edmonton/nissan-frontier/k0l1700203?dc=true").get();
+            doc = Jsoup.connect(myCar.toUrl()).get();
 
 //            String title = doc.title();
 //            System.out.println("Title: " + title);

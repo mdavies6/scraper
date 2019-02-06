@@ -1,11 +1,11 @@
-public class DataModel {
+public class QueryModel {
 
     public int year;
     public String brand;
     public String model;
     public String color;
 
-    public DataModel(int year, String brand, String model){
+    public QueryModel(int year, String brand, String model){
 
         checkYear(year);
 
@@ -17,7 +17,7 @@ public class DataModel {
         this.model = model;
     }
 
-    public DataModel(int year, String brand, String model, String color){
+    public QueryModel(int year, String brand, String model, String color){
 
         checkYear(year);
 
@@ -32,7 +32,7 @@ public class DataModel {
 
     }
 
-    public String toUrl(){
+    public String toQueryUrl(){
         String base = "https://www.kijiji.ca/b-edmonton/";
         String mid = base + year + "-" + brand + "-" + model;
         String end = "/k0l1700203?dc=true";
@@ -42,8 +42,9 @@ public class DataModel {
     }
 
     private static void checkYear(int year){
-        if (year > 2021 || year < 1900){
-            System.err.println("DataModel ERROR: Invalid year");
+        if (year < 1885 || year > 2021){
+            Error yearError = new Error("QueryModel ERROR: Invalid year");
+            throw yearError;
         }
     }
 

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,12 +10,14 @@ public class ScraperMain {
 
     public static void main(String[] args) {
 
+        ArrayList<AdModel> adList = new ArrayList();
+
         try {
 
-            DataModel myCar = new DataModel(2001, "nissan", "rogue");
+            QueryModel myCar = new QueryModel(2001, "nissan", "rogue");
 
             Document doc;
-            doc = Jsoup.connect(myCar.toUrl()).get();
+            doc = Jsoup.connect(myCar.toQueryUrl()).get();
 
 //            String title = doc.title();
 //            System.out.println("Title: " + title);
@@ -33,4 +36,11 @@ public class ScraperMain {
             System.err.println(e);
         }
     }
+
+//    public static AdModel getAdModelFromURL(String url){
+//
+//
+//
+//    }
+
 }

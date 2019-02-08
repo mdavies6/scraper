@@ -14,21 +14,19 @@ public class ScraperMain {
 
         try {
 
-            QueryModel myCar = new QueryModel(2001, "nissan", "rogue");
+            QueryModel myCar = new QueryModel(2017, "nissan", "rogue");
 
             Document doc;
             doc = Jsoup.connect(myCar.toQueryUrl()).get();
+            //System.out.println(myCar.toQueryUrl());
 
-//            String title = doc.title();
-//            System.out.println("Title: " + title);
-//            System.out.println("");
+            Elements regularAds = doc.select("div.search-item.regular-ad");
 
-            Elements prices = doc.select(".price");
+            for (Element ad : regularAds) {
+                String url = "https://www.kijiji.ca" + ad.attr("data-vip-url");
+                System.out.println(" URL: " + url);
 
-            int total = 0;
-
-            for (Element price : prices) {
-                System.out.println("Price: " + price.text());
+               AdModel am = new AdModel(url);
 
             }
 

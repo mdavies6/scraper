@@ -34,7 +34,7 @@ public class QueryModel {
 
     public String toQueryUrl(){
         String base = "https://www.kijiji.ca/b-edmonton/";
-        String mid = base + year + "-" + brand + "-" + model;
+        String mid =  year + "-" + brand + "-" + model;
         String end = "/k0l1700203?dc=true";
 
 

@@ -51,7 +51,7 @@ public class AdModel {
             String priceString = priceElement.attr("content");
 
             double price = Double.parseDouble(priceString);
-            System.out.println(price);
+//            System.out.println(price);
 
             return price;
 

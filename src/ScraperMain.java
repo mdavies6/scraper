@@ -12,10 +12,10 @@ public class ScraperMain {
 
         ArrayList<AdModel> adList = new ArrayList();
 
+        QueryModel myCar = new QueryModel(2017, "nissan", "rogue");
+
+        //Connect to url from QueryModel and iterate through ads, generate adModels and add to adList
         try {
-
-            QueryModel myCar = new QueryModel(2017, "nissan", "rogue");
-
             Document doc;
             doc = Jsoup.connect(myCar.toQueryUrl()).get();
 
@@ -23,22 +23,15 @@ public class ScraperMain {
 
             for (Element ad : regularAds) {
                 String url = "https://www.kijiji.ca" + ad.attr("data-vip-url");
-               // System.out.println(" URL: " + url);
 
                adList.add(new AdModel(url));
 
             }
-            System.out.println(adList.get(0));
+            System.out.println("Ad 0: " + adList.get(0));
 
         } catch (IOException e) {
             System.err.println(e);
         }
     }
-
-//    public static AdModel getAdModelFromURL(String url){
-//
-//
-//
-//    }
 
 }

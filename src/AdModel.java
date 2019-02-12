@@ -11,7 +11,7 @@ public class AdModel {
 
     public String title;
     public double listedPrice;
-    public String text;
+    public String body;
 
     public int wordCount;
 
@@ -22,7 +22,9 @@ public class AdModel {
 
         doc = getDoc();
 
+        title = getTitle();
         listedPrice = getPrice();
+        body = getBody();
         wordCount = getWordCount();
     }
 
@@ -35,10 +37,17 @@ public class AdModel {
         return null;
     }
 
+    private String getTitle() {
+        Element div = doc.selectFirst("div[class*=mainColumn]");
+        Element textElement = div.selectFirst("h1[itemprop=name]");
+        String title = textElement.text();
+        return title;
+    }
+
     private double getPrice() {
         try {
 
-            Element priceElement = doc.select("span[content]").first();
+            Element priceElement = doc.selectFirst("span[content]");
             String priceString = priceElement.attr("content");
 
             double price = Double.parseDouble(priceString);
@@ -53,12 +62,14 @@ public class AdModel {
 
     }
 
-    private String getText(){
-
+    private String getBody() {
+        Element textElement = doc.selectFirst("div[itemprop=description]");
+        String body = textElement.text();
+        return body;
     }
 
     private int getWordCount() {
-        return text.split(" ").length;
+        return body.split(" ").length;
     }
 
     @Override

@@ -15,39 +15,54 @@ public class AdModel {
 
     public int wordCount;
 
-public AdModel(String url){
-    this.url = url;
+    public Document doc;
 
-    listedPrice = getPrice();
-    //calcWordCount();
-}
+    public AdModel(String url) {
+        this.url = url;
 
-private double getPrice(){
-    try {
+        doc = getDoc();
 
-        Document doc;
-        doc = Jsoup.connect(url).get();
+        listedPrice = getPrice();
+        wordCount = getWordCount();
+    }
 
-        Element priceElement = doc.select("span[content]").first();
-        String priceString = priceElement.attr("content");
-
-        double price = Double.parseDouble(priceString);
-        System.out.println(price);
-
-        return price;
-
-    } catch (IOException | NullPointerException e) {
-        if(e instanceof NullPointerException){
-
-        }else{
-            System.err.println(e);
+    private Document getDoc() {
+        try {
+            return Jsoup.connect(url).get();
+        } catch (IOException e) {
+            System.out.println(e);
         }
+        return null;
+    }
 
-    }//end try-catch
-    return -1.0;
-}
+    private double getPrice() {
+        try {
 
-    private void calcWordCount() {
-        wordCount = text.split(" ").length;
+            Element priceElement = doc.select("span[content]").first();
+            String priceString = priceElement.attr("content");
+
+            double price = Double.parseDouble(priceString);
+            System.out.println(price);
+
+            return price;
+
+        } catch (NullPointerException e) {
+            return -1;
+
+        }//end try-catch
+
+    }
+
+    private String getText(){
+
+    }
+
+    private int getWordCount() {
+        return text.split(" ").length;
+    }
+
+    @Override
+    public String toString() {
+        return title + " " + listedPrice + " " + url;
     }
 }

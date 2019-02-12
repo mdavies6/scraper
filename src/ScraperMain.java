@@ -18,17 +18,17 @@ public class ScraperMain {
 
             Document doc;
             doc = Jsoup.connect(myCar.toQueryUrl()).get();
-            //System.out.println(myCar.toQueryUrl());
 
             Elements regularAds = doc.select("div.search-item.regular-ad");
 
             for (Element ad : regularAds) {
                 String url = "https://www.kijiji.ca" + ad.attr("data-vip-url");
-                System.out.println(" URL: " + url);
+               // System.out.println(" URL: " + url);
 
-               AdModel am = new AdModel(url);
+               adList.add(new AdModel(url));
 
             }
+            System.out.println(adList.get(0));
 
         } catch (IOException e) {
             System.err.println(e);

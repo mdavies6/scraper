@@ -7,15 +7,14 @@ import java.io.IOException;
 
 public class AdModel {
 
+    // Properties to display
     public String url;
-
     public String title;
     public double listedPrice;
     public String body;
-
     public int wordCount;
 
-    public Document doc;
+    private Document doc;
 
     public AdModel(String url) {
         this.url = url;
@@ -26,6 +25,16 @@ public class AdModel {
         listedPrice = getPrice();
         body = getBody();
         wordCount = getWordCount();
+        removeCommas();
+    }
+
+    public AdModel(String url, String title, double listedPrice, String body, int wordCount) {
+        this.url = url;
+        this.title = title;
+        this.listedPrice = listedPrice;
+        this.body = body;
+        this.wordCount = wordCount;
+
     }
 
     private Document getDoc() {
@@ -56,6 +65,7 @@ public class AdModel {
             return price;
 
         } catch (NullPointerException e) {
+            System.out.println(e);
             return -1;
 
         }//end try-catch
@@ -70,6 +80,12 @@ public class AdModel {
 
     private int getWordCount() {
         return body.split(" ").length;
+    }
+
+    private void removeCommas(){
+        title = title.replaceAll(",","");
+        body = body.replaceAll(",","");
+
     }
 
     @Override

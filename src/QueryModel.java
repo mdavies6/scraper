@@ -9,8 +9,8 @@ public class QueryModel {
 
         checkYear(year);
 
-//        brand = brand.toLowerCase();
-//        model = model.toLowerCase();
+        brand.toLowerCase();
+        model.toLowerCase();
 
         this.year = year;
         this.brand = brand;
@@ -21,9 +21,9 @@ public class QueryModel {
 
         checkYear(year);
 
-//        brand = brand.toLowerCase();
-//        model =  model.toLowerCase();
-//        color = color.toLowerCase();
+        brand.toLowerCase();
+        model.toLowerCase();
+        color.toLowerCase();
 
         this.year = year;
         this.brand = brand;
@@ -43,7 +43,8 @@ public class QueryModel {
 
     private static void checkYear(int year){
         if (year < 1885 || year > 2021){
-            throw new Error("QueryModel ERROR: Invalid year");
+            Error yearError = new Error("QueryModel ERROR: Invalid year");
+            throw yearError;
         }
     }
 

@@ -1,17 +1,32 @@
 import java.io.*;
 import java.util.ArrayList;
+import javax.swing.*;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
+import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
 
 public class ScraperMain {
 
+    //TODO connect main and gui
+
     public static void main(String[] args) {
 
         ArrayList<AdModel> adList = new ArrayList();
-        loadFile("admodels.csv", adList);
+
+        ArrayList<AdModel> favList = new ArrayList();
+        loadFile("favList.csv", favList);
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                ScraperGUI gui = new ScraperGUI();
+                JFrame frame = new JFrame();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.getContentPane().add(gui);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
 
         QueryModel myCar = new QueryModel(2017, "nissan", "rogue");
 
@@ -26,7 +41,7 @@ public class ScraperMain {
                 String url = "https://www.kijiji.ca" + ad.attr("data-vip-url");
                 AdModel tempAdModel = new AdModel(url);
                 // Check to make sure the ad has a price before appending it to arrayList
-                if (tempAdModel.listedPrice > 1) {
+                if (tempAdModel.listedPrice > 0) {
                     adList.add(tempAdModel);
                 }
 
@@ -37,7 +52,7 @@ public class ScraperMain {
             System.err.println(e);
         }
 
-        saveFile("admodels.csv", adList);
+        saveFile("favList.csv", adList);
 
     }//end main
 

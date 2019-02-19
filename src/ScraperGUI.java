@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
-public class ScraperGUI {
+public class ScraperGUI extends JPanel{
     private JTextField scraperTextField;
     private JPanel panel1;
     private JButton searchButton;
@@ -14,9 +15,8 @@ public class ScraperGUI {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                
             }
         });
     }
-
 }

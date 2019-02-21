@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 public class SearchGUI {
-    private JTextField searchTextField;
+    public JTextField searchTextField;
     private JPanel panel1;
     private JTextField textField1;
     private JTextField textField2;

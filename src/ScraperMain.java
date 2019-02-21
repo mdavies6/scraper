@@ -1,3 +1,5 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -17,14 +19,22 @@ public class ScraperMain {
         ArrayList<AdModel> favList = new ArrayList();
         loadFile("favList.csv", favList);
 
+        ScraperGUI gui = new ScraperGUI();
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                ScraperGUI gui = new ScraperGUI();
                 JFrame frame = new JFrame();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().add(gui);
                 frame.pack();
                 frame.setVisible(true);
+            }
+        });
+
+        gui.searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(gui.scraperTextField.getText());
             }
         });
 

@@ -19,7 +19,7 @@ public class ScraperMain {
         ArrayList<AdModel> favList = new ArrayList();
         loadFile("favList.csv", favList);
 
-        SearchGUI gui = new SearchGUI();
+        ScraperGUI gui = new ScraperGUI();
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

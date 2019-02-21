@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class SearchGUI {
+public class SearchGUI extends JPanel {
     public JTextField searchTextField;
     private JPanel panel1;
     private JTextField textField1;
@@ -12,5 +12,7 @@ public class SearchGUI {
         // TODO: place custom component creation code here
         String[] columnHeaders = {"Title", "Listed Price", "Description"};
         Object [][] data = {};
+
+        this.add(panel1);
     }
 }

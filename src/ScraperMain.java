@@ -19,7 +19,7 @@ public class ScraperMain {
         ArrayList<AdModel> favList = new ArrayList();
         loadFile("favList.csv", favList);
 
-        ScraperGUI gui = new ScraperGUI();
+        SearchGUI gui = new SearchGUI();
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -31,12 +31,12 @@ public class ScraperMain {
             }
         });
 
-        gui.searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(gui.scraperTextField.getText());
-            }
-        });
+//        gui.searchButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                System.out.println(gui.scraperTextField.getText());
+//            }
+//        });
 
         QueryModel myCar = new QueryModel(2017, "nissan", "rogue");
 

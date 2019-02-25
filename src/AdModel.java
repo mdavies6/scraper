@@ -39,7 +39,7 @@ public class AdModel {
         try {
             return Jsoup.connect(url).get();
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println("AdModel:: getDoc error: " + e);
         }
         return null;
     }
@@ -63,7 +63,7 @@ public class AdModel {
             return price;
 
         } catch (NullPointerException e) {
-            System.out.println(e);
+            System.out.println("AdModel:: getPrice error: " + e);
             return -1;
 
         }//end try-catch

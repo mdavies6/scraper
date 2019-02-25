@@ -20,49 +20,72 @@ public class ScraperMain {
         loadFile("favList.csv", favList);
 
         ScraperGUI gui = new ScraperGUI();
+        FinderGUI fGui = new FinderGUI();
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                JFrame frame = new JFrame();
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.getContentPane().add(gui);
-                frame.pack();
-                frame.setVisible(true);
+
+                gui.setVisible(true);
             }
         });
 
-//        gui.searchButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                System.out.println(gui.scraperTextField.getText());
-//            }
-//        });
-
-        QueryModel myCar = new QueryModel(2017, "nissan", "rogue");
-
-        //Connect to url from QueryModel and iterate through ads, generate adModels and add to adList
-        try {
-            Document doc;
-            doc = Jsoup.connect(myCar.toQueryUrl()).get();
-
-            Elements regularAds = doc.select("div.search-item.regular-ad");
-
-            for (Element ad : regularAds) {
-                String url = "https://www.kijiji.ca" + ad.attr("data-vip-url");
-                AdModel tempAdModel = new AdModel(url);
-                // Check to make sure the ad has a price before appending it to arrayList
-                if (tempAdModel.listedPrice > 0) {
-                    adList.add(tempAdModel);
-                }
-
+        gui.searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        fGui.setVisible(true);
+                    }
+                });
             }
-            //System.out.println("Ad 0: " + adList.get(0));
+        });
 
-        } catch (IOException e) {
-            System.err.println(e);
-        }
+        fGui.searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String model = fGui.modelField.getText();
+                String brand = fGui.brandField.getText();
+                int year = Integer.parseInt(fGui.yearField.getText());
 
-        saveFile("favList.csv", adList);
+                QueryModel myCar = new QueryModel(year, brand, model);
+
+                //Connect to url from QueryModel and iterate through ads, generate adModels and add to adList
+                try {
+                    Document doc;
+                    doc = Jsoup.connect(myCar.toQueryUrl()).get();
+
+                    Elements regularAds = doc.select("div.search-item.regular-ad");
+
+                    double limit = 0.0;
+                    double searchResultLimit = 5.0;
+
+                    for (Element ad : regularAds) {
+                        if(limit <= searchResultLimit) {
+                            int progress = (int) (100.0 / searchResultLimit * (limit + 1.0));
+                            fGui.updateBar(progress);
+                            String url = "https://www.kijiji.ca" + ad.attr("data-vip-url");
+                            AdModel tempAdModel = new AdModel(url);
+                            // Check to make sure the ad has a price before appending it to arrayList
+                            if (tempAdModel.listedPrice > 0) {
+                                adList.add(tempAdModel);
+                                limit++;
+                            }
+                        }else{
+                            break;
+                        }
+                    }
+//                    System.out.println("Ad 0: " + adList.get(0));
+//                    System.out.println("save");
+                    saveFile("favList.csv", adList);
+
+                } catch (IOException e) {
+                    System.err.println(e);
+                }
+            }
+        });
+
+
+
 
     }//end main
 

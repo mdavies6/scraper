@@ -57,34 +57,42 @@ public class ScraperMain {
                     Elements regularAds = doc.select("div.search-item.regular-ad");
 
                     double limit = 0.0;
-                    double searchResultLimit = 5.0;
+                    double searchResultLimit = 10.0;
 
                     for (Element ad : regularAds) {
-                        if(limit <= searchResultLimit) {
-                            int progress = (int) (100.0 / searchResultLimit * (limit + 1.0));
+                        System.out.println(limit);
+                        if (limit <= searchResultLimit) {
+                            int progress = (int) (100.0 / (0.5 * searchResultLimit) * (limit + 1.0));
                             fGui.updateBar(progress);
+                            fGui.progressBar1.updateUI();
                             String url = "https://www.kijiji.ca" + ad.attr("data-vip-url");
                             AdModel tempAdModel = new AdModel(url);
                             // Check to make sure the ad has a price before appending it to arrayList
                             if (tempAdModel.listedPrice > 0) {
                                 adList.add(tempAdModel);
-                                limit++;
                             }
-                        }else{
+                            limit++;
+                        } else {
                             break;
                         }
                     }
-//                    System.out.println("Ad 0: " + adList.get(0));
-//                    System.out.println("save");
+                    System.out.println("AdList size: " + adList.size());
+                    System.out.println("save");
                     saveFile("favList.csv", adList);
+
+                    ResultsGUI rg = new ResultsGUI(adList.get(0));
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+
+                            rg.setVisible(true);
+                        }
+                    });
 
                 } catch (IOException e) {
                     System.err.println(e);
                 }
             }
         });
-
-
 
 
     }//end main

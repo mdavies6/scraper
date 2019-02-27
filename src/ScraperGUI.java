@@ -9,7 +9,7 @@ public class ScraperGUI extends JFrame{
     public JButton searchButton;
     public JButton favouritesButton;
     public JButton button2;
-    public JButton button3;
+    public JButton settingsButton;
 
     public ScraperGUI() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

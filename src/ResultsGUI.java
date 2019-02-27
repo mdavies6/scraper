@@ -9,8 +9,8 @@ public class ResultsGUI extends JFrame {
     public ResultsGUI(AdModel ad) {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 800);
-        this.add(panel1);
         setupTable(ad);
+        this.add(panel1);
 
     }
 

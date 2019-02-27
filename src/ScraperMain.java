@@ -43,6 +43,7 @@ public class ScraperMain {
         fGui.searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                fGui.searchButton.setEnabled(false);
                 String model = fGui.modelField.getText();
                 String brand = fGui.brandField.getText();
                 int year = Integer.parseInt(fGui.yearField.getText());

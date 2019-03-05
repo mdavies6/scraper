@@ -10,8 +10,6 @@ import org.jsoup.select.Elements;
 
 public class ScraperMain {
 
-    //TODO connect main and gui
-
     public static void main(String[] args) {
 
         ArrayList<AdModel> adList = new ArrayList();
@@ -56,18 +54,33 @@ public class ScraperMain {
                     doc = Jsoup.connect(myCar.toQueryUrl()).get();
 
                     Elements regularAds = doc.select("div.search-item.regular-ad");
+                    System.out.println(regularAds.size());
 
                     double limit = 0.0;
-                    double searchResultLimit = 10.0;
+                    double userResultLimit = 15.0;
+                    double searchResultLimit = Math.min(userResultLimit, regularAds.size());
 
                     for (Element ad : regularAds) {
                         System.out.println(limit);
                         if (limit <= searchResultLimit) {
-                            int progress = (int) (100.0 / (0.5 * searchResultLimit) * (limit + 1.0));
-                            fGui.updateBar(progress);
-                            fGui.progressBar1.updateUI();
+                            // Progress bar
+                            int progress = (int) ((100.0 / searchResultLimit) * (limit + 1.0));
+                            System.out.println(progress);
+
+                            SwingUtilities.invokeLater(new Runnable() {
+                                public void run() {
+
+                                    //This will be called on the EDT
+                                    fGui.progressBar1.setValue(progress);
+
+
+                                }
+                            });
+
+                            // Create adModel
                             String url = "https://www.kijiji.ca" + ad.attr("data-vip-url");
                             AdModel tempAdModel = new AdModel(url);
+
                             // Check to make sure the ad has a price before appending it to arrayList
                             if (tempAdModel.listedPrice > 0) {
                                 adList.add(tempAdModel);
@@ -81,7 +94,7 @@ public class ScraperMain {
                     System.out.println("save");
                     saveFile("favList.csv", adList);
 
-                    ResultsGUI rg = new ResultsGUI(adList.get(0));
+                    ResultsGUI rg = new ResultsGUI(adList);
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
 
@@ -120,14 +133,14 @@ public class ScraperMain {
         try {
             PrintWriter file = new PrintWriter(new FileWriter(filename));
 
-            for (int i = 0; i < tempList.size(); i++) {
+            for (AdModel adModel : tempList) {
 
                 String toSave = "";
-                toSave = tempList.get(i).url;
-                toSave += "," + tempList.get(i).title;
-                toSave += "," + tempList.get(i).listedPrice;
-                toSave += "," + tempList.get(i).body;
-                toSave += "," + tempList.get(i).wordCount;
+                toSave = adModel.url;
+                toSave += "," + adModel.title;
+                toSave += "," + adModel.listedPrice;
+                toSave += "," + adModel.body;
+                toSave += "," + adModel.wordCount;
 
                 file.println(toSave);
 

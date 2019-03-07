@@ -9,6 +9,7 @@ public class ResultsGUI extends JFrame {
     public ArrayList<AdModel> modelList;
 
     public ResultsGUI(ArrayList<AdModel> modelList) {
+        this.setTitle("Results");
         this.modelList = modelList;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 800);

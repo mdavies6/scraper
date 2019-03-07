@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.imageio.*;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
@@ -48,7 +49,7 @@ public class ScraperMain {
 
                 QueryModel myCar = new QueryModel(year, brand, model);
 
-                //Connect to url from QueryModel and iterate through ads, generate adModels and add to adList
+                // Connect to url from QueryModel and iterate through ads, generate adModels and add to adList
                 try {
                     Document doc;
                     doc = Jsoup.connect(myCar.toQueryUrl()).get();
@@ -56,7 +57,7 @@ public class ScraperMain {
                     Elements regularAds = doc.select("div.search-item.regular-ad");
                     System.out.println(regularAds.size());
 
-                    double limit = 0.0;
+                    double limit = 1.0;
                     double userResultLimit = 15.0;
                     double searchResultLimit = Math.min(userResultLimit, regularAds.size());
 
@@ -64,17 +65,15 @@ public class ScraperMain {
                         System.out.println(limit);
                         if (limit <= searchResultLimit) {
                             // Progress bar
-                            int progress = (int) ((100.0 / searchResultLimit) * (limit + 1.0));
+                            int progress = (int) ((100.0 / searchResultLimit) * limit);
                             System.out.println(progress);
 
                             SwingUtilities.invokeLater(new Runnable() {
                                 public void run() {
-
-                                    //This will be called on the EDT
                                     fGui.progressBar1.setValue(progress);
-
-
+                                    fGui.progressBar1.update(fGui.progressBar1.getGraphics());
                                 }
+
                             });
 
                             // Create adModel
@@ -92,7 +91,7 @@ public class ScraperMain {
                     }
                     System.out.println("AdList size: " + adList.size());
                     System.out.println("save");
-                    saveFile("favList.csv", adList);
+                    //saveFile("favList.csv", adList);
 
                     ResultsGUI rg = new ResultsGUI(adList);
                     SwingUtilities.invokeLater(new Runnable() {

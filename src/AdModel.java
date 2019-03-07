@@ -1,7 +1,10 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.IOException;
+import java.net.URL;
 
 public class AdModel {
 
@@ -11,6 +14,7 @@ public class AdModel {
     public double listedPrice;
     public String body;
     public int wordCount;
+    public Image image;
 
     private Document doc;
 
@@ -24,6 +28,7 @@ public class AdModel {
         body = getBody();
         wordCount = getWordCount();
         removeCommas();
+        image = getImage();
     }
 
     public AdModel(String url, String title, double listedPrice, String body, int wordCount) {
@@ -80,10 +85,24 @@ public class AdModel {
         return body.split(" ").length;
     }
 
-    private void removeCommas(){
-        title = title.replaceAll(",","");
-        body = body.replaceAll(",","");
+    private void removeCommas() {
+        title = title.replaceAll(",", "");
+        body = body.replaceAll(",", "");
 
+    }
+
+    private Image getImage() {
+
+        Element imageElement = doc.selectFirst("div[class*=image]");
+//        imageElement
+
+        try {
+            URL u = new URL(url);
+            return ImageIO.read(u);
+        } catch (IOException e) {
+            System.out.println("AdModel:: getImage error: " + e);
+            return null;
+        }
     }
 
     @Override

@@ -9,6 +9,7 @@ public class FinderGUI extends JFrame{
     public JProgressBar progressBar1;
 
     public FinderGUI(){
+        this.setTitle("Search");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 400);
         this.add(backPanel);

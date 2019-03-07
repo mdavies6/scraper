@@ -4,7 +4,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class ScraperGUI extends JFrame{
-    public JTextField scraperTextField;
     public JPanel panel1;
     public JButton searchButton;
     public JButton favouritesButton;
@@ -12,6 +11,7 @@ public class ScraperGUI extends JFrame{
     public JButton settingsButton;
 
     public ScraperGUI() {
+        this.setTitle("Scraper");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 400);
         this.add(panel1);

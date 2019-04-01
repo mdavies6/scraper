@@ -13,6 +13,8 @@ import org.jsoup.select.Elements;
 
 public class ScraperMain {
 
+    public static double max = 11.0;
+
     public static void main(String[] args) {
 
         ArrayList<AdModel> adList = new ArrayList();
@@ -55,6 +57,19 @@ public class ScraperMain {
             }
         });
 
+        gui.settingsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        String ans = JOptionPane.showInputDialog("Enter the maximum number of search results");
+                        double maxR = Double.parseDouble(ans);
+                        max = maxR;
+                    }
+                });
+            }
+        });
+
         fGui.searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -81,7 +96,7 @@ public class ScraperMain {
                     System.out.println(regularAds.size());
 
                     double limit = 1.0;
-                    double userResultLimit = 11.0;
+                    double userResultLimit = max;
                     double searchResultLimit = Math.min(userResultLimit, regularAds.size());
 
                     for (Element ad : regularAds) {
@@ -129,7 +144,6 @@ public class ScraperMain {
                 }
             }
         });
-
 
     }//end main
 

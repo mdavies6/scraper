@@ -20,8 +20,7 @@ public class HistoryGUI extends JFrame{
 
             JList list = new JList(listModel); //data has type Object[]
             list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-            list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-            list.setVisibleRowCount(-1);
+            list.setLayoutOrientation(JList.VERTICAL);
             list1 = list;
             this.add(list1);
         }

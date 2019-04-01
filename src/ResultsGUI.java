@@ -1,12 +1,15 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ResultsGUI extends JFrame {
     private JPanel panel1;
     private JTable table1;
     public ArrayList<AdModel> modelList;
+    public JButton priceSort;
 
     public ResultsGUI(ArrayList<AdModel> modelList) {
         this.setTitle("Results");
@@ -18,15 +21,16 @@ public class ResultsGUI extends JFrame {
         String[] columnHeaders = {"Title", "Listed Price", "Description"};
         ArrayList data = new ArrayList();
         data = objToDoubleArr(modelList);
-        String[][] tableData = new String[3][10];
+        String[][] tableData = new String[10][3];
         for(int i=0;i<Math.min(modelList.size(),10); i++){
-            tableData[0][i] = modelList.get(i).title;
-            tableData[1][i] = "" + modelList.get(i).listedPrice;
-            tableData[2][i] = modelList.get(i).body;
+            tableData[i][0] = modelList.get(i).title;
+            tableData[i][1] = "" + modelList.get(i).listedPrice;
+            tableData[i][2] = modelList.get(i).body;
 
         }
         table1 = new JTable(tableData,columnHeaders);
-        this.add(table1);
+        this.add(new JScrollPane(table1));
+       
     }
     private ArrayList<Object> objToDoubleArr (ArrayList<AdModel> arrList){
         //Title

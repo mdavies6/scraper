@@ -3,7 +3,9 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import javax.swing.*;
-import javax.imageio.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
@@ -16,7 +18,9 @@ public class ScraperMain {
         ArrayList<AdModel> adList = new ArrayList();
 
         ArrayList<AdModel> favList = new ArrayList();
-        loadFile("favList.csv", favList);
+        ArrayList<Object> historyList = new ArrayList();
+       // loadFile("favList.csv", favList);
+        loadFile("historyList.csv", historyList, true);
 
         ScraperGUI gui = new ScraperGUI();
         FinderGUI fGui = new FinderGUI();
@@ -39,6 +43,18 @@ public class ScraperMain {
             }
         });
 
+        gui.historyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        HistoryGUI hGui = new HistoryGUI(historyList);
+                      hGui.setVisible(true);
+                    }
+                });
+            }
+        });
+
         fGui.searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -49,6 +65,13 @@ public class ScraperMain {
 
                 QueryModel myCar = new QueryModel(year, brand, model);
 
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
+                String dateString = dateFormat.format(date); //2016/11/16 12:08:43
+
+                historyList.add(year + " " + brand + " " + model + "  at: " + dateString);
+                saveFile("historyList.csv", historyList, true);
+
                 // Connect to url from QueryModel and iterate through ads, generate adModels and add to adList
                 try {
                     Document doc;
@@ -58,7 +81,7 @@ public class ScraperMain {
                     System.out.println(regularAds.size());
 
                     double limit = 1.0;
-                    double userResultLimit = 15.0;
+                    double userResultLimit = 11.0;
                     double searchResultLimit = Math.min(userResultLimit, regularAds.size());
 
                     for (Element ad : regularAds) {
@@ -151,5 +174,39 @@ public class ScraperMain {
 
     }//end saveFile
 
+    public static void loadFile(String filename, ArrayList tempList, Boolean isHistory) {
+        String temp = "";
+        try {
+            BufferedReader file = new BufferedReader(new FileReader(filename));
+            while (file.ready()) {
+                temp = file.readLine();
 
+                tempList.add(temp);
+
+            }
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
+    }//end loadFile
+
+
+    public static void saveFile(String filename, ArrayList<Object> tempList, Boolean isHistory) {
+        try {
+            PrintWriter file = new PrintWriter(new FileWriter(filename));
+
+            for (Object str : tempList) {
+
+                String toSave = "";
+                toSave += str;
+
+                file.println(toSave);
+
+            }
+            file.close();
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
+
+    }//end saveFile
 }

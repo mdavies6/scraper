@@ -7,7 +7,7 @@ public class ScraperGUI extends JFrame{
     public JPanel panel1;
     public JButton searchButton;
     public JButton favouritesButton;
-    public JButton button2;
+    public JButton historyButton;
     public JButton settingsButton;
 
     public ScraperGUI() {

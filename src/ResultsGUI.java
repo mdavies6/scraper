@@ -9,12 +9,11 @@ public class ResultsGUI extends JFrame {
     private JPanel panel1;
     private JTable table1;
     public ArrayList<AdModel> modelList;
-    public JButton priceSort;
 
     public ResultsGUI(ArrayList<AdModel> modelList) {
         this.setTitle("Results");
         this.modelList = modelList;
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(600, 800);
         this.add(panel1);
 
@@ -30,7 +29,6 @@ public class ResultsGUI extends JFrame {
         }
         table1 = new JTable(tableData,columnHeaders);
         this.add(new JScrollPane(table1));
-       
     }
     private ArrayList<Object> objToDoubleArr (ArrayList<AdModel> arrList){
         //Title

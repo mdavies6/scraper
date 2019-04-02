@@ -94,10 +94,12 @@ public class ScraperMain {
                     //saveFile("favList.csv", adList);
 
                     ResultsGUI rg = new ResultsGUI(adList);
+                    Sort sg = new Sort(adList);
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
 
                             rg.setVisible(true);
+                            sg.setVisible(true);
                         }
                     });
 

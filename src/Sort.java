@@ -41,25 +41,25 @@ public class Sort extends JFrame{
 
                 }
 
-                for(int i=0;i<Math.min(modelList.size(),10); i++){
-                   for(int j=1;j<(Math.min(modelList.size(),10)-1); j++) {
-                       if (Double.parseDouble(tableData1[j][1]) > Double.parseDouble(tableData1[j + 1][1])) {
-                           temp[0][0] = tableData1[j][0];
-                           temp[0][1] = "" + tableData1[j][1];
-                           temp[0][2] = tableData1[j][2];
+
+                   for(int j=1;j<(Math.min(modelList.size(),10)); j++) {
+                       if (Double.parseDouble(tableData1[j - 1][1]) > Double.parseDouble(tableData1[j][1])  ) {
+                           temp[0][0] = tableData1[j-1][0];
+                           temp[0][1] = "" + tableData1[j-1][1];
+                           temp[0][2] = tableData1[j-1][2];
 
 
-                           tableData1[j][0] = tableData1[j + 1][0];
-                           tableData1[j][1] = "" + tableData1[j + 1][1];
-                           tableData1[j][2] = tableData1[j + 1][2];
+                           tableData1[j-1][0] = tableData1[j][0];
+                           tableData1[j-1][1] = "" + tableData1[j][1];
+                           tableData1[j-1][2] = tableData1[j][2];
 
-                           tableData1[j + 1][0] = temp[0][0];
-                           tableData1[j + 1][1] = temp[0][1];
-                           tableData1[j + 1][2] = temp[0][2];
+                           tableData1[j][0] = temp[0][0];
+                           tableData1[j][1] = temp[0][1];
+                           tableData1[j][2] = temp[0][2];
                        }
                    }
 
-                }
+                
                  table1 = new JTable(tableData1,columnHeaders1);
                 JScrollPane table11 = new JScrollPane(table1);
                 setTable1(table11);
@@ -71,6 +71,7 @@ public class Sort extends JFrame{
     }
     private void setTable1(JScrollPane temp){
         this.add(temp);
+        sbp.setVisible(false);
         revalidate();
         repaint();
     }

@@ -84,7 +84,7 @@ public class ScraperMain {
                 Date date = new Date();
                 String dateString = dateFormat.format(date); //2016/11/16 12:08:43
 
-                historyList.add(year + " " + brand + " " + model + "  at: " + dateString);
+                historyList.add(year + " " + brand + " " + model + "    at: " + dateString);
                 saveFile("historyList.csv", historyList, true);
 
                 // Connect to url from QueryModel and iterate through ads, generate adModels and add to adList

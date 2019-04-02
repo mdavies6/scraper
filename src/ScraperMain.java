@@ -63,8 +63,10 @@ public class ScraperMain {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         String ans = JOptionPane.showInputDialog("Enter the maximum number of search results");
-                        double maxR = Double.parseDouble(ans);
-                        max = maxR;
+                        if (!ans.equals(null)){
+                            double maxR = Double.parseDouble(ans);
+                            max = maxR;
+                        }
                     }
                 });
             }
@@ -132,10 +134,11 @@ public class ScraperMain {
                     //saveFile("favList.csv", adList);
 
                     ResultsGUI rg = new ResultsGUI(adList);
+                    Sort sg = new Sort(adList);
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
-
                             rg.setVisible(true);
+                            sg.setVisible(true);
                         }
                     });
 

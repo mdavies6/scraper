@@ -1,21 +1,23 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ResultsGUI extends JFrame {
     private JPanel panel1;
-    private JTable table1;
+    public JTable table1;
+    private JButton searchButton;
     public ArrayList<AdModel> modelList;
+
 
     public ResultsGUI(ArrayList<AdModel> modelList) {
         this.setTitle("Results");
         this.modelList = modelList;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(600, 800);
-        this.add(panel1);
 
         String[] columnHeaders = {"Title", "Listed Price", "Description"};
         ArrayList data = new ArrayList();
@@ -28,7 +30,13 @@ public class ResultsGUI extends JFrame {
 
         }
         table1 = new JTable(tableData,columnHeaders);
+        this.add(panel1);
         this.add(new JScrollPane(table1));
+
+
+
+
+
     }
     private ArrayList<Object> objToDoubleArr (ArrayList<AdModel> arrList){
         //Title
